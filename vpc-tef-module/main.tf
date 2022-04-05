@@ -1,19 +1,17 @@
-
 provider "aws" {
   region = "ap-south-1"
 }
 
-
-module "vpc" {
-  source = "./vpc"
-  vpc_name = "module-vpc"
+module "vpc_create" {
+    source = "./vpc"
+    vpc_name = "from-module"
 }
 
-module "a" {
-  source = "./vpc"
-  vpc_name = "from-module-vpc"
+module "vpc_another" {
+    source = "./vpc"
+    vpc_name = "another-module"
 }
 
-output "vpc" {
-  value = module.vpc.vpc_info
+output "module_data" {
+    value = module.vpc_name.vpc_info
 }
