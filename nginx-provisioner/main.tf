@@ -50,7 +50,7 @@ resource "aws_security_group" "rules" {
         from_port = 22
         to_port = 22
         protocol = "tcp"
-        cidr_blocks = ["${var.my_ip}/32"] #public-ip of the ec2-instance where this code runs
+        cidr_blocks = ["${var.my_ip}/32"] #public-ip of the ec2-instance where this code runs which must be defined in variable.tf and terraform.tfvars
     }
 
     ingress {
@@ -75,7 +75,7 @@ resource "aws_security_group" "rules" {
 #make sure to create a key-pair using ssh-keygen in the project directory 
 resource "aws_key_pair" "keypair" {
     key_name = "key"
-    public_key = file("nginx_key.pub")
+    public_key = file("<key-name>.pub")
 }
 
 data "aws_ami" "ami" {
@@ -113,6 +113,6 @@ resource "aws_instance" "nginx" {
         host = aws_instance.nginx.public_ip
         type = "ssh"
         user = "ec2-user"
-        private_key = file("nginx_key")
+        private_key = file("<key-name-without-.pub-extension")
     }
 }
